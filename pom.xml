@@ -6,6 +6,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
+	<build>
+		<finalName>servlet-examples</finalName>
+	</build>
 	
 		<dependencies>
 			<dependency>

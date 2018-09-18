@@ -24,10 +24,11 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		if(!userid.isEmpty() && !password.isEmpty())
 		{
-			request.setAttribute("isAuthenticated", true);
+			request.getSession().setAttribute("isAuthenticated", true);
 			System.out.println("login servlet set to true");
-			response.sendRedirect("/home.jsp");
-			//request.getRequestDispatcher("/login.jsp").forward(request, response);
+			response.sendRedirect("home.jsp");
+		} else {
+			response.sendRedirect("login");
 		}
 	}
 
