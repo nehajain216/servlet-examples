@@ -26,23 +26,14 @@ public class ValidationFilter implements Filter {
 		System.out.println("filter:" + req.getAttribute("isAuthenticated"));
 		
 		System.out.println(req.getRequestURL());
-		if(req.getRequestURL().toString() == "http://localhost:8080/servlet-examples/")
+		if(!req.getRequestURL().toString().equals("http://localhost:8080/servlet-examples/login"))
 		{
-			chain.doFilter(req, res);
-			return;
-		}
-		if(req.getAttribute("isAuthenticated") == null)
-		{
-			//req.getRequestDispatcher("/login").forward(req, response);
-			res.sendRedirect("/login");
-			return;
-		}
-		else
-		if(req.getAttribute("isAuthenticated").equals(true))
-		{
-			System.out.println("filterrrrrrrrrrr");
-			//res.sendRedirect("/home.jsp");
-			chain.doFilter(req, response);
+			Boolean isAuthenticated = (Boolean) req.getSession().getAttribute("isAuthenticated");
+			if(isAuthenticated == null || isAuthenticated==false)
+			{
+				res.sendRedirect("/login");
+				return;
+			}
 		}
 			
 		chain.doFilter(req, response);
