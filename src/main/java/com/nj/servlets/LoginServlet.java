@@ -16,7 +16,7 @@ public class LoginServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/login.jsp").forward(request, response);
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,8 +26,8 @@ public class LoginServlet extends HttpServlet {
 		{
 			request.setAttribute("isAuthenticated", true);
 			System.out.println("login servlet set to true");
-			//response.sendRedirect("/home.jsp");
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			response.sendRedirect("/home.jsp");
+			//request.getRequestDispatcher("/login.jsp").forward(request, response);
 		}
 	}
 
