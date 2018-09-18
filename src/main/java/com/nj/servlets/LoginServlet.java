@@ -7,21 +7,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
+@WebServlet("/")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     
     public LoginServlet() {
-    	System.out.println("Hello");
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String userid = request.getParameter("userid");
+		String password = request.getParameter("password");
+		if(!userid.isEmpty() && !password.isEmpty())
+		{
+			request.setAttribute("isAuthenticated", true);
+			System.out.println("login servlet set to true");
+			//response.sendRedirect("/home.jsp");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}
 	}
 
 }
