@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(filterName="/", urlPatterns= {"/","/home","/login"})
+@WebFilter(filterName="/", urlPatterns= {"/*"})
 public class ValidationFilter implements Filter {
 
     public ValidationFilter() {
@@ -31,7 +31,7 @@ public class ValidationFilter implements Filter {
 			Boolean isAuthenticated = (Boolean) req.getSession().getAttribute("isAuthenticated");
 			if(isAuthenticated == null || isAuthenticated==false)
 			{
-				res.sendRedirect("/login");
+				res.sendRedirect("/servlet-examples/login");
 				return;
 			}
 		}

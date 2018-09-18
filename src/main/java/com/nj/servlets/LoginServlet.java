@@ -26,9 +26,9 @@ public class LoginServlet extends HttpServlet {
 		{
 			request.getSession().setAttribute("isAuthenticated", true);
 			System.out.println("login servlet set to true");
-			response.sendRedirect("/home.jsp");
+			response.sendRedirect("home.jsp");
 		} else {
-			response.sendRedirect("/login");
+			response.sendRedirect("login");
 		}
 	}
 
