@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(filterName="/", urlPatterns= {"/","/home","/login"})
+@WebFilter(filterName="ValidationFilter", urlPatterns= {"/*"})
 public class ValidationFilter implements Filter {
 
     public ValidationFilter() {
@@ -26,14 +26,23 @@ public class ValidationFilter implements Filter {
 		System.out.println("filter:" + req.getAttribute("isAuthenticated"));
 		
 		System.out.println(req.getRequestURL());
-		if(req.getRequestURL().toString() == "http://localhost:8080/servlet-examples/")
+		if(!req.getRequestURL().toString().equals("http://localhost:8080/servlet-examples/login"))
 		{
+			Boolean isAuthenticated = (Boolean) req.getSession().getAttribute("isAuthenticated");
+			if(isAuthenticated == null || isAuthenticated==false)
+			{
+				res.sendRedirect("/servlet-examples/login");
+				return;
+			}
+		}if(req.getRequestURL().toString().equalsIgnoreCase("http://localhost:8080/servlet-examples/login"))
+		{
+			System.out.println("login URL validation");
 			chain.doFilter(req, res);
 			return;
 		}
+		else
 		if(req.getAttribute("isAuthenticated") == null)
 		{
-			//req.getRequestDispatcher("/login").forward(req, response);
 			res.sendRedirect("/login");
 			return;
 		}
@@ -42,10 +51,11 @@ public class ValidationFilter implements Filter {
 		{
 			System.out.println("filterrrrrrrrrrr");
 			//res.sendRedirect("/home.jsp");
-			chain.doFilter(req, response);
+			chain.doFilter(req, res);
 		}
+		/**/
 			
-		chain.doFilter(req, response);
+		chain.doFilter(req, res);
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
